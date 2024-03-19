@@ -1,12 +1,20 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 import os
+from keras.models import load_model
+from waste_detector import process_frame
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['UPLOAD_FOLDER'] = 'uploads' 
+app.config['UPLOAD_FOLDER'] = 'uploads'
+
+# Generate a secure secret key
+secret_key = os.urandom(24)
+app.secret_key = secret_key
+
 db = SQLAlchemy(app)
 cors = CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
@@ -55,23 +63,33 @@ def login():
     else:
         return jsonify({"error": "Invalid username or password"}), 401
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    if 'file' not in request.files:
+@app.route("/image", methods=["POST"])
+def handle_image_upload():
+    if "file" not in request.files:
         return jsonify({"error": "No file provided"}), 400
-    file = request.files['file']
-    if file.filename == '':
+
+    file = request.files["file"]
+
+    if file.filename == "":
         return jsonify({"error": "No selected file"}), 400
+
     if file:
-        filename = file.filename
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-       
-        label = "Label" 
-        
-        new_image = UserImage(username="your_username", image_path=filename, label=label)
+        filename = secure_filename(file.filename)
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+        file.save(file_path)
+
+        # Default username
+        username = "NidhiKadam"
+
+        # Process the image and get recognized labels
+        recognized_labels = process_image(file_path)
+
+        # Create a new UserImage object and add it to the session
+        new_image = UserImage(username=username, image_path=filename, label=", ".join(recognized_labels))
         db.session.add(new_image)
         db.session.commit()
-        return jsonify({"message": "File uploaded successfully"}), 200
+
+        return jsonify({"message": "File uploaded successfully", "recognized_labels": recognized_labels}), 200
 
 if __name__ == "__main__":
     with app.app_context():
