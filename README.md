@@ -1,22 +1,28 @@
-# CodeHers_AugenblickHackathon
-BinSense is a smart way to track and seggregate your waste.
+# BinSense- A smart way to seggregate your waste
+BinSense is an AI integrated web platform which allows users to track and analyze the waste and seggregate it.
 
-1. HomePage
-![hp](https://github.com/meetalik8/CodeHers_AugenblickHackathon/assets/102135323/62b60762-71ac-4256-8cb2-31253ed18bef)
+## Technologies Used
 
-2. Login
-![LOGIN](https://github.com/meetalik8/CodeHers_AugenblickHackathon/assets/102135323/fdb2b22d-ad52-49bd-bfb0-47838a339ee2)
+- ReactJS
+- Python
+- Flask (Python web framework)
+- OpenCV (Computer vision library)
+- Tensorflow (Machine Learning library)
+- Matplotlib (Data visualisation library)
 
-3. Game
-![GAMR](https://github.com/meetalik8/CodeHers_AugenblickHackathon/assets/102135323/f265775f-4655-4c5c-892d-714b3cf330ea)
+## Features
 
-4. Image Prediction
-![image](https://github.com/meetalik8/CodeHers_AugenblickHackathon/assets/102135323/364b814f-b725-402d-be01-6ae05566b5c3)
-
-5. Live Camera Detection
-![image](https://github.com/meetalik8/CodeHers_AugenblickHackathon/assets/102135323/2e78be2f-503b-46d7-8fae-db088e153a15)
+1. Live Camera Feed Classification: After user logs in, and turns on their camera, the model starts detecting and classifying the objects into waste classes.
+2. Image Classification: The user has an option to upload images which are then classified by another model.
+3. Waste Seggregation Game: The application contains a waste seggregation game which allows user to learn about waste seggregation in a gamification manner, thus inturn raising awareness about the same.
+5. User-friendly Interface: The website offers an intuitive and responsive user interface for easy navigation and interaction.
 
 
-Contributers
-https://github.com/meetalik8
-https://github.com/nidhik5
+## Working Demo Video of our application:
+https://github.com/meetalik8/BinSense/assets/102135323/caf36ade-f209-4d42-b5e3-38a6fe869acf
+
+
+This project won the AugenBlick's 8 Hour Hackathon organized at Thadomal Shahani Engineering College.
+## Contributers 
+1. Frontend and Backend: [Meetali](https://github.com/meetalik8)
+2. AI and ML [Nidhi](https://github.com/nidhik5)
